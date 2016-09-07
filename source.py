@@ -30,12 +30,15 @@ def medianOdd(myList):
     sortedValues=sorted(myList)
     middleIndex=((listLength+1)/2)-1
 return sortedValues[middleIndex]
+medianRed=medianOdd(redPixelList)
+medianGreen=medianOdd(greenPixelList)
+medianBlue=medianOdd(bluePixelList)
 redPixelList.remove(myRed)
 greenPixelList.remove(myGreen)
 bluePixelList.remove(myBlue)
 for x in range(0,pictureWidth):
     for y in range(0,pictureWidth)
-	     outputImage=new.image(x,y,median)
+	     outputImage=new.image(x,y,medianRed,medianGreen,medianBlue)
 		 print outputImage
 
 		
