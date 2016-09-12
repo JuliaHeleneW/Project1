@@ -54,7 +54,7 @@ redPixelList.remove(red)
 greenPixelList.remove(green)
 bluePixelList.remove(blue)
 #define a function to put the pixels into the final image
-def pixelForOutput(image,value):
+def pixelForOutput(image):
     #load the image
     pix=image.load()
     #for each pixel
