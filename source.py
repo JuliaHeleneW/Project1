@@ -11,50 +11,18 @@ image7=Image.open("7.png")
 image8=Image.open("8.png")
 image9=Image.open("9.png")
 #open the 9 images
-image10=Image.new("RGB",(495,557))
-#create a new empty image with the size of the other images
-image10.save("image10.png")
 #store the 9 images in a list
 images=[image1,image2,image3,image4,image5,image6,image7,image8,image9]
 #create pixel lists to store the pixel data
 redPixelList=[]
 greenPixelList=[]
 bluePixelList=[]
-#loop going though every image
-for Image in images:
-    #determine the size of the images
-    width,height=Image.size;
-    #loop going through the width
-    for x in range(0,width):
-        #and the height of the images
-        for y in range(0,height):
-            #for every image
-	         for Image in images:
-                 #get the RGB values of every pixel
-                  red, green, blue = Image.getpixel((x,y))
-                  #store the RGB values of the pixels in 3 lists, one for each value of each pixel
-                  redPixelList.append(red)
-                  greenPixelList.append(green)
-                  bluePixelList.append(blue)
-                  #define the median of a list
-                  def median(list):
-                  #sort the list
-                      srtd = sorted(list)
-                      #get the length of the list
-                      alen = len(srtd)
-                      #return the int of the median
-                      return int(0.5*( srtd[(alen-1)//2] + srtd[alen//2]))
-                   #get the median values for the pixel lists
-medianRed=median(redPixelList)
-medianGreen=median(greenPixelList)
-medianBlue=median(bluePixelList)
-rgbVal=(medianRed,medianGreen,medianBlue)
-#remove the data from the pixel lists so the median for the next pixel can be defined
-redPixelList.remove(red)
-greenPixelList.remove(green)
-bluePixelList.remove(blue)
-#define a function to put the pixels into the final image
+#create a new empty image with the size of the other images
+outputImage=Image.new("RGB",(495,557))
+#load the empty image
+outputImagePX=outputImage.load()
 def pixelForOutput(image):
+    global medianRed,medianGreen,medianBlue
     #load the image
     pix=image.load()
     #for each pixel
@@ -62,7 +30,45 @@ def pixelForOutput(image):
         for y in range(0,557):
                #set the medians as RGB values
                pix[x,y]=medianRed,medianGreen,medianBlue
-#use the function on the empty image we created
-pixelForOutput(image10)
+
+#loop going though every image
+#determine the size of the images
+width,height=(495,557)
+#loop going through the width
+for x in range(0,width):
+    #and the height of the images
+    for y in range(0,height):
+        #for every image
+        for Image in images:
+                #get the RGB values of every pixel
+                red, green, blue = Image.getpixel((x,y))
+                #store the RGB values of the pixels in 3 lists, one for each value of each pixel
+                redPixelList.append(red)
+                greenPixelList.append(green)
+                bluePixelList.append(blue)
+                #define the median of a list
+                def median(list):
+                #sort the list
+                    srtd = sorted(list)
+                    #get the length of the list
+                    alen = len(srtd)
+                    #return the int of the median
+                    return int(0.5*( srtd[(alen-1)//2] + srtd[alen//2]))
+                #get the median values for the pixel lists
+        medianRed=median(redPixelList)
+        medianGreen=median(greenPixelList)
+        medianBlue=median(bluePixelList)
+        rgbVal=(medianRed,medianGreen,medianBlue)
+        #remove the data from the pixel lists so the median for the next pixel can be defined
+        redPixelList.clear()
+        greenPixelList.clear()
+        bluePixelList.clear()
+        outputImagePX[x,y]=rgbVal
+        #use the function on the empty image we created
+        #pixelForOutput(image10)
+   
+    #define a function to put the pixels into the final image
 #show the image
-image10.show()
+outputImage.save("result.png")
+outputImage.show()
+#image10.show()
