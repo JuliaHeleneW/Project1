@@ -1,6 +1,6 @@
-from PIL import Image
 #import image stuff from Pillow
-#Link to gitHub: https://github.com/JuliaHeleneW/Project1
+from PIL import Image
+#open the 9 images
 image1=Image.open("1.png")
 image2=Image.open("2.png")
 image3=Image.open("3.png")
@@ -10,7 +10,6 @@ image6=Image.open("6.png")
 image7=Image.open("7.png")
 image8=Image.open("8.png")
 image9=Image.open("9.png")
-#open the 9 images
 #store the 9 images in a list
 images=[image1,image2,image3,image4,image5,image6,image7,image8,image9]
 #create pixel lists to store the pixel data
@@ -21,7 +20,9 @@ bluePixelList=[]
 outputImage=Image.new("RGB",(495,557))
 #load the empty image
 outputImagePX=outputImage.load()
+#define a function to set the output pixels
 def pixelForOutput(image):
+    #3 global variables to store the RGB values
     global medianRed,medianGreen,medianBlue
     #load the image
     pix=image.load()
@@ -30,8 +31,6 @@ def pixelForOutput(image):
         for y in range(0,557):
                #set the medians as RGB values
                pix[x,y]=medianRed,medianGreen,medianBlue
-
-#loop going though every image
 #determine the size of the images
 width,height=(495,557)
 #loop going through the width
@@ -54,7 +53,7 @@ for x in range(0,width):
                     alen = len(srtd)
                     #return the int of the median
                     return int(0.5*( srtd[(alen-1)//2] + srtd[alen//2]))
-                #get the median values for the pixel lists
+        #get the median values for the pixel lists
         medianRed=median(redPixelList)
         medianGreen=median(greenPixelList)
         medianBlue=median(bluePixelList)
@@ -63,11 +62,10 @@ for x in range(0,width):
         redPixelList.clear()
         greenPixelList.clear()
         bluePixelList.clear()
+        #set the pixel
         outputImagePX[x,y]=rgbVal
         #use the function on the empty image we created
-        #pixelForOutput(image10)
-   
-    #define a function to put the pixels into the final image
+        pixelForOutput(image10)
 #show the image
 outputImage.save("result.png")
 outputImage.show()
